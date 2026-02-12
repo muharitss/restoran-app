@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'https://restoran-backend-srdw.onrender.com';
+// Gunakan relative path agar di-proxy oleh Vite (dev) atau Netlify (prod)
+// Ini menghindari masalah CORS karena browser menganggap request ke domain yang sama
+const baseURL = import.meta.env.VITE_API_BASE_URL || '';
 
-console.log('🌐 API Base URL:', baseURL);
+console.log('🌐 API Base URL:', baseURL || '(relative)');
 
 export const api = axios.create({
     baseURL,

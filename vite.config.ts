@@ -18,4 +18,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://restoran-backend-srdw.onrender.com',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })
