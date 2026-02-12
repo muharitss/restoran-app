@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { AxiosError } from 'axios';
 import { loginUser } from '../api/login';
 import { useAuthStore } from '../store/auth.store';
-import type { LoginRequest } from '../types/auth.types';
+import type { LoginRequest, LoginResponse } from '../types/auth.types';
 
 interface UseLoginReturn {
     login: (credentials: LoginRequest) => Promise<void>;
@@ -25,9 +26,23 @@ export const useLogin = (): UseLoginReturn => {
                 setAuth(response.data.user, response.data.token);
             } else {
                 setError(response.message || 'Login gagal');
+                throw new Error(response.message || 'Login gagal');
             }
         } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Terjadi kesalahan saat login';
+            let errorMessage = 'Terjadi kesalahan saat login';
+            
+            if (err instanceof AxiosError) {
+                // Handle axios error
+                if (err.response?.data) {
+                    const responseData = err.response.data as LoginResponse;
+                    errorMessage = responseData.message || err.message;
+                } else if (err.message) {
+                    errorMessage = err.message;
+                }
+            } else if (err instanceof Error) {
+                errorMessage = err.message;
+            }
+            
             setError(errorMessage);
             throw err;
         } finally {

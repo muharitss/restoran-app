@@ -136,3 +136,58 @@ The auth store (Zustand) manages:
 - `isAuthenticated`: Boolean flag
 - `setAuth(user, token)`: Set user and token
 - `logout()`: Clear auth state
+
+## Troubleshooting
+
+### Check Console Logs
+
+The login implementation includes detailed console logging:
+
+- 🔵 Blue: Request being sent
+- ✅ Green: Successful response
+- ❌ Red: Error occurred
+
+Open browser console (F12) to see these logs.
+
+### Common Issues
+
+1. **CORS Error**
+   - Make sure backend allows requests from your frontend origin
+   - Check if backend has proper CORS configuration
+
+2. **Network Error**
+   - Verify backend is running at `https://restoran-backend-srdw.onrender.com`
+   - Check your internet connection
+   - Try accessing the API directly in browser
+
+3. **401 Unauthorized**
+   - Check if email and password are correct
+   - Verify the endpoint `/api/users/login` is correct
+
+4. **Response Format Error**
+   - Ensure backend returns the expected response format:
+     ```json
+     {
+       "success": true,
+       "message": "Login berhasil",
+       "data": {
+         "user": { ... },
+         "token": "..."
+       }
+     }
+     ```
+
+### Debug Steps
+
+1. Open browser console (F12)
+2. Go to Network tab
+3. Try to login
+4. Check the request/response in Network tab
+5. Look for any error messages in Console tab
+
+### Test Credentials
+
+```
+Email: owner@gmail.com
+Password: password123
+```
