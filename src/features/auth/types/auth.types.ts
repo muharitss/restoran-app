@@ -13,7 +13,18 @@ export interface AuthActions {
 
 export type AuthStore = AuthState & AuthActions;
 
+export interface LoginRequest {
+    email: string;
+    password: string;
+}
+
 export interface LoginResponseData {
     user: User;
     token: string;
+}
+
+export interface LoginResponse {
+    success: boolean;
+    message: string;
+    data: LoginResponseData;
 }
